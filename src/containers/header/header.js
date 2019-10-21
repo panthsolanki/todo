@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { NavBar, Title } from "./header.styled";
 
 class Header extends Component {
   render() { 
     return ( 
-      <div>
-        <Link to='/add' >
-          <span>Add todo</span>
-        </Link>
-        <br/>
-        <Link to='/list'>
-          <span>list Todo</span>
-        </Link>
-        <br/>
-        <Link to='/'>
-          <span>logout</span>
-        </Link>
-      </div>
+      <NavBar>
+        <Title>ToDo</Title>
+        <div className="NavLinkWrapper">
+          <NavLink to='/add' className="NavLink" activeClassName="selected">
+            <span>Add</span>
+          </NavLink>
+          <NavLink to='/list' className="NavLink" activeClassName="selected">
+            <span>List</span>
+          </NavLink>
+          <NavLink to='/' className="NavLink">
+            <span>Logout</span>
+          </NavLink>
+        </div>
+      </NavBar>
     );
   }
 }
