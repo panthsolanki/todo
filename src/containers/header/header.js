@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import { NavBar, Title } from "./header.styled";
+import * as ROUTES from '../../constants/routes';
 
 class Header extends Component {
   render() { 
@@ -8,13 +9,13 @@ class Header extends Component {
       <NavBar>
         <Title>ToDo</Title>
         <div className="NavLinkWrapper">
-          <NavLink to='/add' className="NavLink" activeClassName="selected">
+          <NavLink to={ROUTES.ADD} className="NavLink" activeClassName="selected">
             <span>Add</span>
           </NavLink>
-          <NavLink to='/list' className="NavLink" activeClassName="selected">
+          <NavLink to={ROUTES.LIST} className="NavLink" activeClassName="selected">
             <span>List</span>
           </NavLink>
-          <NavLink to='/' className="NavLink">
+          <NavLink to={ROUTES.HOME} className="NavLink">
             <span>Logout</span>
           </NavLink>
         </div>
