@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import  { FirebaseContext, withFirebase } from '../Firebase';
+import { connect } from 'react-redux';
 
 class List extends Component {
-  state = { 
-    todoList: [],
-   }
-  componentDidMount() {
+  render() { 
     this.props.firebase.db.collection("todos")
     .get()
     .then(querySnapshot => {
@@ -16,16 +14,20 @@ class List extends Component {
         Object.assign(todo, doc.data());
         todoList.push(todo);
       });
-      this.setState({todoList})
-      console.log('this.state.todoList: ', this.state.todoList);
+      this.props.getList(todoList);
     });
-  }
-  render() { 
     return (
       <FirebaseContext.Consumer>        
         {firebase => {
           return (<div>
-            <h1>List with firestore</h1>
+            <h1>List</h1>
+            <ul>
+              {this.props.todoList.map((todo) => (
+                <li key={todo.id}>
+                  {todo.task} {todo.date} {todo.time} {todo.status}
+                </li>
+              ))}
+            </ul>
           </div>);
         }}
       </FirebaseContext.Consumer>
@@ -33,4 +35,16 @@ class List extends Component {
   }
 }
  
-export default withFirebase(List);
+const mapStateToProps = (state) => {
+  return {
+    todoList: state.todoList,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getList: (todoList) => dispatch({type:'GET_LIST', value:todoList}),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withFirebase(List));
